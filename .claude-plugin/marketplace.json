@@ -1,0 +1,15 @@
+{
+  "name": "claude-plugins",
+  "description": "Guy Soffer's Claude Code plugin marketplace — AI-assisted development workflow tools",
+  "author": "Guy Soffer",
+  "plugins": {
+    "blueprint": {
+      "description": "Set up a structured AI-assisted development workflow for any project. Installs agent roles, three-track process, and project-doctor. Configures everything for your tech stack.",
+      "source": "plugins/blueprint"
+    },
+    "project-doctor": {
+      "description": "Deep codebase health check: dead code removal, bug detection, security audit, sanity checks, and documentation sync. Works with any tech stack.",
+      "source": "plugins/project-doctor"
+    }
+  }
+}
