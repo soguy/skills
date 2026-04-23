@@ -93,7 +93,35 @@ Summarise your findings to the user in a short bullet list and ask for confirmat
 
 ---
 
-## Step 5 — Generate the layer
+## Step 5 — Configure roles
+
+Present the default roles and offer customization before writing any files.
+
+**Default roles:**
+
+| Role | Default responsibilities |
+|------|--------------------------|
+| PM | Task classification, specs, acceptance criteria, closeout |
+| Tech Lead | Architecture, delegation, review, PR readiness |
+| Dev Worker | Implementation, tests, verification docs |
+| QA Verifier | Independent verification using project verification profile |
+| DevOps | Deployment and deployment verification |
+
+Check `.claude/agents/` for existing role files. If found, display the current managed section content so the user can see what is already configured.
+
+Ask:
+
+> *"Would you like to customize agent roles? You can update responsibilities for any default role, or add new ones. Enter your changes or say 'skip' to use defaults."*
+
+Collect and record for use in Step 7:
+- **Modified default roles** — updated responsibility text for any of the five default roles
+- **New roles** — name (lowercase-hyphenated, becomes the filename) + responsibility description
+
+On re-run: read existing managed sections and display them before asking, so the user sees current configuration. Content outside managed sections is never shown and never modified.
+
+---
+
+## Step 6 — Generate the layer
 
 Create `.claude/layers/<stack-name>/` with four files tailored to this exact project.
 
@@ -118,7 +146,7 @@ Create `.claude/layers/<stack-name>/` with four files tailored to this exact pro
 
 ---
 
-## Step 6 — Write all files
+## Step 7 — Write all files
 
 ### Managed section pattern
 
@@ -163,9 +191,11 @@ For Track 1, `/project-doctor` is mandatory before final merge readiness.
 #### `.claude/agents/pm.md`
 
 ```markdown
+<!-- scaffold:begin managed pm-role -->
 Owns task classification, specs, acceptance criteria, and closeout.
 Run `superpowers:brainstorming` before Track 1 specs.
 For UI work, run `frontend-design` before Tech Lead handoff.
+<!-- scaffold:end managed pm-role -->
 ```
 
 ---
@@ -173,8 +203,10 @@ For UI work, run `frontend-design` before Tech Lead handoff.
 #### `.claude/agents/tech-lead.md`
 
 ```markdown
+<!-- scaffold:begin managed tech-lead-role -->
 Owns architecture decisions, delegation, review, tests, PR readiness, and final merge handoff.
 Must enforce dependencies and mandatory `/project-doctor` review for Track 1.
+<!-- scaffold:end managed tech-lead-role -->
 ```
 
 ---
@@ -182,7 +214,9 @@ Must enforce dependencies and mandatory `/project-doctor` review for Track 1.
 #### `.claude/agents/dev-worker.md`
 
 ```markdown
+<!-- scaffold:begin managed dev-worker-role -->
 Implements the assigned change, writes or updates tests, and documents how to verify the change.
+<!-- scaffold:end managed dev-worker-role -->
 ```
 
 ---
@@ -190,8 +224,10 @@ Implements the assigned change, writes or updates tests, and documents how to ve
 #### `.claude/agents/qa-verifier.md`
 
 ```markdown
+<!-- scaffold:begin managed qa-verifier-role -->
 Owns independent verification. Use the project verification profile in `.claude/project-artifacts/verification/`.
 For browser-based projects: use Playwright MCP (`mcp__playwright__*`) if available.
+<!-- scaffold:end managed qa-verifier-role -->
 ```
 
 ---
@@ -199,8 +235,26 @@ For browser-based projects: use Playwright MCP (`mcp__playwright__*`) if availab
 #### `.claude/agents/devops.md`
 
 ```markdown
+<!-- scaffold:begin managed devops-role -->
 Owns deployment and deployment verification when the task requires it.
+<!-- scaffold:end managed devops-role -->
 ```
+
+---
+
+#### Custom roles and modified responsibilities (from Step 5)
+
+For each **modified default role**: replace the managed section content with the user-provided text instead of the default.
+
+For each **new role** collected in Step 5, create `.claude/agents/<role-name>.md`:
+
+```markdown
+<!-- scaffold:begin managed <role-name>-role -->
+[User-provided responsibility description]
+<!-- scaffold:end managed <role-name>-role -->
+```
+
+New role files follow the same re-run rules: the managed section is regenerated, content outside it is never touched.
 
 ---
 
@@ -377,18 +431,18 @@ PM owns or delegates, no code changes required.
 
 ---
 
-## Step 7 — Install project-doctor
+## Step 8 — Install project-doctor
 
 1. Check `~/.claude/plugins/installed_plugins.json` for a key containing `project-doctor`
 2. Check `.claude/skills/project-doctor/SKILL.md` in the current project
 
-If neither exists → write the full project-doctor SKILL.md content to `.claude/skills/project-doctor/SKILL.md`. (Use the content from the project-doctor skill in the same marketplace — `/plugin marketplace add guy-soffer/claude-plugins` then reference it, or embed the content directly.)
+If neither exists → write the full project-doctor SKILL.md content to `.claude/skills/project-doctor/SKILL.md`. (Use the content from the project-doctor skill in the same marketplace — `/plugin marketplace add soguy/claude-plugins` then reference it, or embed the content directly.)
 
 Wire `review-strategy.md` managed section to point to `/project-doctor` regardless of whether it was just installed or already present.
 
 ---
 
-## Step 8 — Report
+## Step 9 — Report
 
 Print this summary:
 
@@ -401,6 +455,9 @@ Print this summary:
 ### Updated (managed sections refreshed)
 [list every file with managed sections that were regenerated]
 
+### Agent roles
+[list all roles — default ones marked (default), customised ones marked (customised), new ones marked (new)]
+
 ### Skipped (already customised — manual content preserved)
 [list files that exist without managed sections]
 
@@ -410,7 +467,7 @@ Print this summary:
 ---
 From now on, Claude will classify every task as Track 1, 2, or 3 before acting.
 Use /project-doctor for Track 1 deep review before merge.
-Re-run /blueprint anytime to refresh your configuration.
+Re-run /blueprint anytime to refresh your configuration or add/update roles.
 ```
 
 ---
@@ -420,7 +477,7 @@ Re-run /blueprint anytime to refresh your configuration.
 When the user says the stack is unknown or cannot be detected, create only the structural files:
 
 - `CLAUDE.md` — full content with track instructions managed section
-- `.claude/agents/pm.md`, `tech-lead.md`, `dev-worker.md`, `qa-verifier.md`, `devops.md` — full content as above
+- `.claude/agents/pm.md`, `tech-lead.md`, `dev-worker.md`, `qa-verifier.md`, `devops.md` — full content as above (with managed sections), no role customization prompt in pending mode
 - `docs/process/tracks.md` — full content as above
 - `.claude/project-overrides/project-profile.md` — all sections present but values set to `[TBD — re-run /blueprint once stack is chosen]`
 - `.claude/layers/pending/README.md` — content: `Stack not yet determined. Re-run /blueprint once the technology stack is chosen.`
