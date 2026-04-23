@@ -1,6 +1,6 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "soguy-ai-workflow-plugins",
+  "name": "soguy-skills",
   "metadata": {
     "description": "Guy Soffer's plugin marketplace — AI-assisted development workflow tools"
   },

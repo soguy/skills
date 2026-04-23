@@ -1,4 +1,4 @@
-# ai-workflow-plugins
+# soguy-skills
 
 Guy Soffer's Claude Code plugin marketplace — AI-assisted development workflow tools.
 
@@ -16,7 +16,7 @@ Deep codebase health check: dead code removal, bug detection, security audit, sa
 
 Add this marketplace once:
 ```
-/plugin marketplace add https://github.com/soguy/ai-workflow-plugins.git
+/plugin marketplace add https://github.com/soguy/skills.git
 ```
 
 Then install individual skills:
@@ -35,14 +35,14 @@ Copy the skill file directly into your project:
 ```bash
 mkdir -p .claude/skills/blueprint
 curl -o .claude/skills/blueprint/SKILL.md \
-  https://raw.githubusercontent.com/soguy/ai-workflow-plugins/main/plugins/blueprint/.claude/skills/blueprint/SKILL.md
+  https://raw.githubusercontent.com/soguy/skills/main/plugins/blueprint/.claude/skills/blueprint/SKILL.md
 ```
 
 **project-doctor:**
 ```bash
 mkdir -p .claude/skills/project-doctor
 curl -o .claude/skills/project-doctor/SKILL.md \
-  https://raw.githubusercontent.com/soguy/ai-workflow-plugins/main/plugins/project-doctor/.claude/skills/project-doctor/SKILL.md
+  https://raw.githubusercontent.com/soguy/skills/main/plugins/project-doctor/.claude/skills/project-doctor/SKILL.md
 ```
 
 Then invoke in Claude Code:
