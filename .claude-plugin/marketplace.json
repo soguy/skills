@@ -16,7 +16,7 @@
       "author": {
         "name": "Guy Soffer"
       },
-      "source": "plugins/blueprint",
+      "source": "./plugins/blueprint",
       "category": "workflow",
       "tags": ["workflow", "agents", "process", "setup"]
     },
@@ -27,7 +27,7 @@
       "author": {
         "name": "Guy Soffer"
       },
-      "source": "plugins/project-doctor",
+      "source": "./plugins/project-doctor",
       "category": "code-quality",
       "tags": ["review", "security", "debugging", "health-check"]
     }
