@@ -1,0 +1,10 @@
+{
+  "name": "project-doctor",
+  "description": "Diagnoses and heals software projects end-to-end: dead code removal, bug detection, security audit, build/test sanity checks, and documentation sync. Works with any tech stack.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Guy Soffer"
+  },
+  "repository": "https://github.com/soguy/skills",
+  "skills": "./.claude/skills"
+}
