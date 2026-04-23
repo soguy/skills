@@ -1,15 +1,35 @@
 {
-  "name": "claude-plugins",
-  "description": "Guy Soffer's Claude Code plugin marketplace — AI-assisted development workflow tools",
-  "author": "Guy Soffer",
-  "plugins": {
-    "blueprint": {
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "soguy-plugins",
+  "metadata": {
+    "description": "Guy Soffer's plugin marketplace — AI-assisted development workflow tools"
+  },
+  "owner": {
+    "name": "Guy Soffer",
+    "email": "guysoffer@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "blueprint",
       "description": "Set up a structured AI-assisted development workflow for any project. Installs agent roles, three-track process, and project-doctor. Configures everything for your tech stack.",
-      "source": "plugins/blueprint"
+      "version": "1.0.0",
+      "author": {
+        "name": "Guy Soffer"
+      },
+      "source": "plugins/blueprint",
+      "category": "workflow",
+      "tags": ["workflow", "agents", "process", "setup"]
     },
-    "project-doctor": {
+    {
+      "name": "project-doctor",
       "description": "Deep codebase health check: dead code removal, bug detection, security audit, sanity checks, and documentation sync. Works with any tech stack.",
-      "source": "plugins/project-doctor"
+      "version": "1.0.0",
+      "author": {
+        "name": "Guy Soffer"
+      },
+      "source": "plugins/project-doctor",
+      "category": "code-quality",
+      "tags": ["review", "security", "debugging", "health-check"]
     }
-  }
+  ]
 }
